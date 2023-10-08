@@ -25,3 +25,25 @@
     ```
     poetry run python -m deep.main
     ```
+   
+### Структура проекта:
+```
+my_project/
+│
+├── deep/
+│   ├── .env
+│   ├── main.py - телеграм бот
+│   └── db_usage/
+│       ├── __init__.py 
+│       ├── db_run.py - создание движка, сессий для доступа к БД
+│       ├── manage.py - создание БД и таблиц
+│       ├── methods.py - методы работы с БД
+│       └── models.py - модели таблиц БД
+│
+├── tests/
+│   └── __init__.py
+│
+├── pyproject.toml
+├── poetry.lock
+└── README.md
+```
