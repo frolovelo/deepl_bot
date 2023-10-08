@@ -1,7 +1,8 @@
 from sqlalchemy import inspect
 from deep.db_usage.db_run import Base, engine
-from sqlalchemy_utils import database_exists, create_database
 from deep.db_usage.models import User, Translate
+from sqlalchemy_utils import database_exists, create_database
+
 
 if not database_exists(engine.url):
     print(f'БД создана под именем: {engine.url.database}')
@@ -23,7 +24,7 @@ translate = Translate.__tablename__
 if user in existing_tables and translate in existing_tables:
     print(f'Таблицы {user} и {translate} уже существуют')
 else:
-    # Если таблицы нет, создайте её
+    # Если таблицы нет
     Base.metadata.create_all(engine)
     print(f'Таблицы {user} и {translate} успешно созданы')
 

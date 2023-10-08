@@ -27,8 +27,8 @@ def add_new_user(user_id, nickname):
             print(f"Пользователь с id {user_id} добавлен успешно!")
         else:
             print(f"Пользователь с id {user_id} уже существует в базе данных.")
-    except Exception as e:
-        print(f"Ошибка при добавлении пользователя: {str(e)}")
+    except Exception as ex:
+        print(f"Ошибка при добавлении пользователя: {str(ex)}")
         session.rollback()
     finally:
         session.close()
@@ -54,8 +54,8 @@ def set_translation(author_id, language, text_original, text_translate):
         session.add(new_translation)
         session.commit()
         print("Запись перевода добавлена успешно!")
-    except Exception as e:
-        print(f"Ошибка при добавлении записи перевода: {str(e)}")
+    except Exception as ex:
+        print(f"Ошибка при добавлении записи перевода: {str(ex)}")
         session.rollback()
     finally:
         session.close()
@@ -89,8 +89,8 @@ def get_user_translations(user_id, page_number=1, page_size=6):
             page_size).offset(offset).all()
         return translations, total_pages
 
-    except Exception as e:
-        print(f"Ошибка при получении переводов пользователя: {str(e)}")
+    except Exception as ex:
+        print(f"Ошибка при получении переводов пользователя: {str(ex)}")
     finally:
         session.close()
 
@@ -109,8 +109,8 @@ def get_translate(translate_id):
         translate = session.query(Translate).filter_by(id=translate_id).one()
         return translate
 
-    except Exception as e:
+    except Exception as ex:
         session.close()
-        print(f"Ошибка при получении записи перевода: {str(e)}")
+        print(f"Ошибка при получении записи перевода: {str(ex)}")
     finally:
         session.close()

@@ -1,11 +1,13 @@
 """Взаимодействие с Telegram"""
 
-from telebot import TeleBot
-from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
-from deep.db_usage import *
-import deepl
 import os
 from dotenv import load_dotenv
+from telebot import TeleBot
+from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
+import deepl
+from deep.db_usage import *
+
+
 
 load_dotenv()
 bot = TeleBot(os.getenv('TOKEN_TELEGRAM'))
@@ -71,24 +73,30 @@ def get_history(call):
         lst_button = []
 
         for ind, obj in enumerate(lst_obj, start=start):
-            text_original = obj.text_original[:40] + '...' if len(obj.text_original) > 40 else obj.text_original
-            text_translate = obj.text_translate[:40] + '...' if len(obj.text_translate) > 40 else obj.text_translate
+            text_original = obj.text_original[:40] + '...' if len(obj.text_original) > 40 \
+                else obj.text_original
+            text_translate = obj.text_translate[:40] + '...' if len(obj.text_translate) > 40 \
+                else obj.text_translate
             lst.append(f"<b>{ind}.</b> {text_original} - {text_translate}")
-            lst_button.append(InlineKeyboardButton(text=f'{ind}', callback_data=f'TRANSLATE {obj.id} {page}'))
+            lst_button.append(InlineKeyboardButton(text=f'{ind}',
+                                                   callback_data=f'TRANSLATE {obj.id} {page}'))
 
         markup.add(*lst_button)
         lst_button = []
 
         # Создание кнопки "назад"
         if current_page > 1:
-            lst_button.append(InlineKeyboardButton(text='Назад', callback_data=f'HISTORY {current_page - 1}'))
+            lst_button.append(InlineKeyboardButton(text='Назад',
+                                                   callback_data=f'HISTORY {current_page - 1}'))
 
         # Кнопка нового перевода
-        lst_button.append(InlineKeyboardButton(text='Скрыть меню', callback_data='MENU'))
+        lst_button.append(InlineKeyboardButton(text='Скрыть меню',
+                                               callback_data='MENU'))
 
         # Создание кнопки "вперед"
         if current_page < total_pages:
-            lst_button.append(InlineKeyboardButton(text='Вперед', callback_data=f'HISTORY {current_page + 1}'))
+            lst_button.append(InlineKeyboardButton(text='Вперед',
+                                                   callback_data=f'HISTORY {current_page + 1}'))
 
         markup.add(*lst_button)
         text = ';\n'.join(lst)
@@ -96,7 +104,7 @@ def get_history(call):
 
     text, markup = text_format_markup(obj_translate, total_pages=total_pages, current_page=page,
                                       start=(page - 1) * 6 + 1)
-    preview = "История пуста..." if not len(text) else "Ваша история:"
+    preview = "История пуста..." if not text else "Ваша история:"
     bot.edit_message_text(chat_id=call.message.chat.id,
                           message_id=call.message.message_id,
                           text=f'<b>{preview}</b>\n\n{text}',
@@ -150,7 +158,7 @@ def check_translate(call):
 
     # Отправляем инструкцию для ввода нового текста
     bot.send_message(chat_id=call.message.chat.id,
-                     text=f'Вы можете ввести новый текст для перевода:',
+                     text='Вы можете ввести новый текст для перевода:',
                      reply_markup=markup)
 
 

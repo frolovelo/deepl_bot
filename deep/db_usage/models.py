@@ -1,7 +1,7 @@
 """Модели таблиц бд"""
 from sqlalchemy.orm import relationship
-from .db_run import Base
 from sqlalchemy import Column, Integer, String, ForeignKey
+from .db_run import Base
 
 
 class User(Base):
@@ -25,4 +25,3 @@ class Translate(Base):
 
     # Отношение к таблице User
     author = relationship('User', back_populates='translations')
-
