@@ -1,7 +1,7 @@
 """Модели таблиц бд"""
 from sqlalchemy.orm import relationship
 from .db_run import Base
-from sqlalchemy import Column, Integer, String, Sequence, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey
 
 
 class User(Base):

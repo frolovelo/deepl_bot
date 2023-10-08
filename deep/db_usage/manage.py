@@ -9,8 +9,6 @@ if not database_exists(engine.url):
 else:
     print('БД уже существует')
 
-# Base.metadata.create_all(engine)
-# print('Таблицы')
 
 # Создайте экземпляр инспектора базы данных
 inspector = inspect(engine)

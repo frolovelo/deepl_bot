@@ -1,8 +1,7 @@
 """Взаимодействие с Telegram"""
 
-from telebot import types, TeleBot
-from telebot.types import CallbackQuery, ReplyKeyboardRemove, \
-    ReplyKeyboardMarkup, InlineKeyboardMarkup, InlineKeyboardButton
+from telebot import TeleBot
+from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 from deep.db_usage import *
 import deepl
 import os
@@ -161,7 +160,4 @@ def return_to_main_menu(call):
                      reply_markup=markup)
 
 
-# t1 = f"{'x' * 4100}"
-# t2 = f"{'x' * 4100}"
-# add_translation(467168798, 'RU', t1, t2)
 bot.infinity_polling()
