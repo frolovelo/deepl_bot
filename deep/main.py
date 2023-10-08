@@ -37,7 +37,10 @@ def translate_text(message):
     target_language = 'RU'
     translated_text = translator.translate_text(text_to_translate, target_lang=target_language)
     set_translation(message.chat.id, target_language, message.text, translated_text.text)
-    bot.send_message(message.chat.id, f"{translated_text.text}", reply_markup=markup_start())
+    bot.send_message(message.chat.id, f"{translated_text.text}")
+    bot.send_message(message.chat.id,
+                     text="Введите текст на английском для перевода:",
+                     reply_markup=markup_start())
 
 
 @bot.callback_query_handler(lambda call: call.data.startswith('HISTORY'))
@@ -81,7 +84,7 @@ def get_history(call):
             lst_button.append(InlineKeyboardButton(text='Назад', callback_data=f'HISTORY {current_page - 1}'))
 
         # Кнопка нового перевода
-        lst_button.append(InlineKeyboardButton(text='Новый перевод', callback_data='MENU'))
+        lst_button.append(InlineKeyboardButton(text='Скрыть меню', callback_data='MENU'))
 
         # Создание кнопки "вперед"
         if current_page < total_pages:
@@ -147,7 +150,7 @@ def check_translate(call):
 
     # Отправляем инструкцию для ввода нового текста
     bot.send_message(chat_id=call.message.chat.id,
-                     text=f'Введите текст на английском для перевода:',
+                     text=f'Вы можете ввести новый текст для перевода:',
                      reply_markup=markup)
 
 
@@ -155,9 +158,10 @@ def check_translate(call):
 def return_to_main_menu(call):
     """Обработчик обратного вызова для возвращения в главное меню."""
     markup = markup_start()
-    bot.send_message(chat_id=call.message.chat.id,
-                     text="Введите текст на английском для перевода:",
-                     reply_markup=markup)
+    bot.edit_message_text(chat_id=call.message.chat.id,
+                          message_id=call.message.message_id,
+                          text="Введите текст на английском для перевода:",
+                          reply_markup=markup)
 
 
 bot.infinity_polling()
