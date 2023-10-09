@@ -1,13 +1,13 @@
 """Модели таблиц бд"""
 from sqlalchemy.orm import relationship
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey, BigInteger
 from .db_run import Base
 
 
 class User(Base):
     """БД Пользователей"""
     __tablename__ = 'user'
-    id = Column(Integer, primary_key=True)
+    id = Column(BigInteger, primary_key=True)
     nickname = Column(String(60), nullable=False, unique=True)
 
     # Отношение к таблице Translate
