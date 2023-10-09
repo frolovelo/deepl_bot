@@ -18,7 +18,7 @@ class Translate(Base):
     """БД Переводов"""
     __tablename__ = 'translate'
     id = Column(Integer, primary_key=True)
-    author_id = Column(Integer, ForeignKey('user.id'), nullable=False)
+    author_id = Column(BigInteger, ForeignKey('user.id'), nullable=False)
     language = Column(String(2), nullable=False)
     text_original = Column(String, nullable=False)
     text_translate = Column(String, nullable=False)
